@@ -44,7 +44,7 @@ function createCard(card, deleteCard, handleLike) {
     cardElement.querySelector('.card__title').textContent = card.name;
 
     // @todo: обрабочтик события клик на изображеение
-    cardElement.querySelector('.card__image').addEventListener('click', ()=>{
+    cardElement.querySelector('.card__image').addEventListener('click', () => {
         openImagePopup(card.link, card.name)
     });
 
@@ -62,10 +62,8 @@ function createCard(card, deleteCard, handleLike) {
 }
 
 //@todo Создайте функцию openImagePopup, которая будет открывать попап с картинкой:
-function openImagePopup(imageLink, caption){
+function openImagePopup(imageLink, caption) {
     const popupImage = document.querySelector('.popup_type_image');
-    const popupImageContent = popupImage.querySelector('.popup__content_content_image');
-    const popupImageCloseButton = popupImage.querySelector('.popup__close');
     const popupImageElement = popupImage.querySelector('.popup__image');
     const popupImageCaption = popupImage.querySelector('.popup__caption');
 
@@ -77,17 +75,15 @@ function openImagePopup(imageLink, caption){
 
 // @todo: Функция лайк карточки
 function handleLike(button) {
-    button.parentElement.classList.toggle('.card__like-button_is-active');
+    button.classList.toggle('card__like-button_is-active')
 }
-
-
 
 //@todo Обработчик события submit для формы создания новой карточки.
 const newCardForm = document.querySelector('.popup_type_new-card .popup__form');
 const cardContainer = document.querySelector('.places__list');
 
 // Обработчик события submit для формы создания новой карточки
-function handleNewCardSubmit(event){
+function handleNewCardSubmit(event) {
     event.preventDefault();
 
     // Получаем значения полей формы
@@ -119,7 +115,7 @@ const deleteCard = (cardElement) => {
 
 // @todo: Вывести карточки на страницу
 initialCards.forEach(function (card) {
-    const newCardElement = createCard(card, deleteCard);
+    const newCardElement = createCard(card, deleteCard, handleLike);
     placesItem.append(newCardElement);
 });
 
@@ -150,4 +146,4 @@ function handleFormSubmit(evt) {
 formElement.addEventListener('submit', handleFormSubmit);
 
 // @todo: экспортировать
-export { handleEscClose };
+export {handleEscClose};
