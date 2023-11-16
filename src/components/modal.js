@@ -1,3 +1,5 @@
+import {popupImageCaption, popupImageElement, popupImage} from "./constants";
+
 function handleEscClose(event) {
     if (event.key === 'Escape') {
         const popup = document.querySelector('.popup_is-opened');
@@ -16,16 +18,18 @@ function handleCloseOverlayClick(event) {
 //@todo Функция открытыя попапа
 function openModal(popup) {
     const closeButton = popup.querySelector('.popup__close');
+    closeButton.addEventListener('click', handleCloseButtonClick);
+    function handleCloseButtonClick() {
+        closeModal(popup);
+        closeButton.removeEventListener('click', handleCloseButtonClick);
+    }
+
     popup.classList.add('popup_is-opened');
     document.addEventListener('keydown', handleEscClose);
-    closeButton.addEventListener('click', handleCloseButtonClick);
-    popup.addEventListener('click', handleCloseOverlayClick);
+    popup.addEventListener('mousedown', handleCloseOverlayClick);
 }
 //@todo Функция закрывает кнопки нажатие
-function handleCloseButtonClick() {
-    const popup = this.closest('.popup');
-    closeModal(popup);
-}
+
 
 //@todo Функция закрытия попапа
 function closeModal(popup) {
@@ -37,10 +41,6 @@ function closeModal(popup) {
 
 //@todo Создать функции openImagePopup, которая будет открывать попап с картинкой:
 function openImagePopup(imageLink, caption) {
-    const popupImage = document.querySelector('.popup_type_image');
-    const popupImageElement = popupImage.querySelector('.popup__image');
-    const popupImageCaption = popupImage.querySelector('.popup__caption');
-
     popupImageElement.src = imageLink;
     popupImageElement.alt = caption;
     popupImageCaption.textContent = caption;

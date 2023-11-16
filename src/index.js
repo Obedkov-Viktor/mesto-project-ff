@@ -1,5 +1,6 @@
 import './styles/index.css';
-import {initialCards, createCard} from "./components/cards";
+import {initialCards} from "./components/cards";
+import {createCard} from "./components/card";
 import {openModal, closeModal} from "./components/modal";
 
 
@@ -7,7 +8,7 @@ import {openModal, closeModal} from "./components/modal";
 const placesItem = document.querySelector('.places__list');
 
 // @todo: редактировать  тип всплывающего окна
-const popupProfileOpenButton = document.querySelector('.popup_type_edit');
+const popupProfile = document.querySelector('.popup_type_edit');
 
 // @todo: кнопки профиль  редактировать тип всплывающего окна
 const editButton = document.querySelector('.profile__edit-button');
@@ -16,7 +17,7 @@ const editButton = document.querySelector('.profile__edit-button');
 const popupAddCard = document.querySelector('.popup_type_new-card');
 
 // @todo: кнопки профиль  добавить тип всплывающего окна
-const addButton = document.querySelector('.profile__add-button');
+const popupCardOpenButton = document.querySelector('.profile__add-button');
 
 // @todo: querySelector forms
 const formProfile = document.querySelector('form[name="edit-profile"]');
@@ -28,8 +29,12 @@ const profileDescription = document.querySelector('.profile__description');
 //@todo Обработчик события submit для формы создания новой карточки.
 const newCardForm = document.querySelector('.popup_type_new-card .popup__form');
 const cardContainer = document.querySelector('.places__list');
-editButton.addEventListener('click', () => openModal(popupProfileOpenButton));
-addButton.addEventListener('click', () => openModal(popupAddCard));
+editButton.addEventListener('click', () => {
+    nameInput.value = profileName.textContent;
+    jobInput.value = profileDescription.textContent;
+    openModal(popupProfile);
+});
+popupCardOpenButton.addEventListener('click', () => openModal(popupAddCard));
 
 // @todo: Функция лайк карточки
 function handleLike(button) {
@@ -73,15 +78,8 @@ initialCards.forEach(function (card) {
     placesItem.append(newCardElement);
 });
 
-// @todo Закрытие попапа кликом на "Esc"
-
-
-// @todo: При открытии формы поля «Имя» и «О себе»
-nameInput.value = profileName.textContent;
-jobInput.value = profileDescription.textContent;
-
 // @todo: нажатия кнопки «Сохранить» информация на странице обновляется, а попап автоматически закрывается
-function handleFormSubmit(evt) {
+function handleFormProfileSubmit(evt) {
     evt.preventDefault();
     const nameValue = nameInput.value;
     const jobValue = jobInput.value;
@@ -92,4 +90,4 @@ function handleFormSubmit(evt) {
     closeModal(popup);
 }
 
-formProfile.addEventListener('submit', handleFormSubmit);
+formProfile.addEventListener('submit', handleFormProfileSubmit);
