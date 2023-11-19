@@ -15,15 +15,16 @@ function handleCloseOverlayClick(event) {
     }
 }
 
+function handleCloseButtonClick() {
+    const openedPopup = document.querySelector('.popup_is-opened');
+    if (openedPopup) {
+        closeModal(openedPopup);
+    }
+}
 //@todo Функция открытыя попапа
 function openModal(popup) {
     const closeButton = popup.querySelector('.popup__close');
     closeButton.addEventListener('click', handleCloseButtonClick);
-    function handleCloseButtonClick() {
-        closeModal(popup);
-        closeButton.removeEventListener('click', handleCloseButtonClick);
-    }
-
     popup.classList.add('popup_is-opened');
     document.addEventListener('keydown', handleEscClose);
     popup.addEventListener('mousedown', handleCloseOverlayClick);
