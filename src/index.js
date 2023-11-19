@@ -1,7 +1,7 @@
 import './styles/index.css';
 import {initialCards} from "./components/cards";
 import {createCard} from "./components/card";
-import {openModal, closeModal} from "./components/modal";
+import {closeModal, openModal} from "./components/modal";
 
 
 // @todo: DOM узлы
@@ -11,7 +11,7 @@ const placesItem = document.querySelector('.places__list');
 const popupProfile = document.querySelector('.popup_type_edit');
 
 // @todo: кнопки профиль  редактировать тип всплывающего окна
-const editButton = document.querySelector('.profile__edit-button');
+const popupProfileOpenButton = document.querySelector('.profile__edit-button');
 
 // @todo: кнопки добавить card тип всплывающего окна
 const popupAddCard = document.querySelector('.popup_type_new-card');
@@ -29,7 +29,7 @@ const profileDescription = document.querySelector('.profile__description');
 //@todo Обработчик события submit для формы создания новой карточки.
 const newCardForm = document.querySelector('.popup_type_new-card .popup__form');
 const cardContainer = document.querySelector('.places__list');
-editButton.addEventListener('click', () => {
+popupProfileOpenButton.addEventListener('click', () => {
     nameInput.value = profileName.textContent;
     jobInput.value = profileDescription.textContent;
     openModal(popupProfile);
@@ -60,8 +60,7 @@ function handleNewCardSubmit(event) {
     // Добавляем новую карточку в начало контейнера с карточками
     cardContainer.prepend(newCardElement);
     // Закрываем диалоговое окно и очищаем форму
-    const popup = document.querySelector('.popup_is-opened');
-    closeModal(popup);
+    closeModal(popupAddCard);
     newCardForm.reset();
 }
 
@@ -85,9 +84,7 @@ function handleFormProfileSubmit(evt) {
     const jobValue = jobInput.value;
     profileName.textContent = nameValue;
     profileDescription.textContent = jobValue;
-
-    const popup = document.querySelector('.popup_is-opened');
-    closeModal(popup);
+    closeModal(popupProfile);
 }
 
 formProfile.addEventListener('submit', handleFormProfileSubmit);
