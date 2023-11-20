@@ -29,14 +29,12 @@ function openModal(popup) {
     document.addEventListener('keydown', handleEscClose);
     popup.addEventListener('mousedown', handleCloseOverlayClick);
 }
-//@todo Функция закрывает кнопки нажатие
-
-
 //@todo Функция закрытия попапа
 function closeModal(popup) {
+    const closeButton = popup.querySelector('.popup__close');
+    closeButton.removeEventListener('click', handleCloseButtonClick);
     popup.classList.remove('popup_is-opened');
     document.removeEventListener('keydown', handleEscClose);
-
     popup.removeEventListener('click', handleCloseOverlayClick);
 }
 
