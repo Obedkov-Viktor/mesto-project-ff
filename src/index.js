@@ -2,7 +2,8 @@ import './styles/index.css';
 import {initialCards} from "./components/cards";
 import {createCard} from "./components/card";
 import {closeModal, openModal} from "./components/modal";
-import {validateProfileForm} from "./components/validate";
+import {formError, formInput, showInputError, hideInputError} from "./components/validate";
+
 
 const placesItem = document.querySelector('.places__list');
 const popupProfile = document.querySelector('.popup_type_edit');
@@ -68,11 +69,32 @@ initialCards.forEach(function (card) {
 // @todo: нажатия кнопки «Сохранить» информация на странице обновляется, а попап автоматически закрывается
 function handleFormProfileSubmit(evt) {
     evt.preventDefault();
+    const inputs = Array.from(formProfile.querySelectorAll('.popup__input'));
+    let formIsValid = true;
+
+    inputs.forEach(input => {
+        const errorElement = formProfile.querySelector(`.${input.id}-error`);
+        if(!input.validity.valid){
+            showInputError(input, errorElement);
+            formIsValid = false;
+        }else{
+            hideInputError(input, errorElement);
+        }
+    });
+
     const nameValue = nameInput.value;
     const jobValue = jobInput.value;
     profileName.textContent = nameValue;
     profileDescription.textContent = jobValue;
     closeModal(popupProfile);
 }
+
+formError.addEventListener('input', function () {
+    if (!formInput.validity.valid) {
+        showInputError(formInput);
+    } else {
+        hideInputError(formInput);
+    }
+})
 
 formProfile.addEventListener('submit', handleFormProfileSubmit);
