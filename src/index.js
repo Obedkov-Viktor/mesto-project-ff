@@ -2,7 +2,6 @@ import './styles/index.css';
 import {initialCards} from "./components/cards";
 import {createCard} from "./components/card";
 import {closeModal, openModal} from "./components/modal";
-import {formError, formInput, showInputError, hideInputError} from "./components/validate";
 
 
 const placesItem = document.querySelector('.places__list');
