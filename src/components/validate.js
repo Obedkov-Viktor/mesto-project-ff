@@ -16,7 +16,7 @@ const showInputError = (formElement, inputElement, errorMessage) => {
     errorElement.classList.add('form__input-error_active');
 };
 
-const hideInputError = (profileForm, inputElement, validationConfig) => {
+const hideInputError = (formElement, inputElement, validationConfig) => {
     const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
     inputElement.classList.remove('input-error');
     errorElement.classList.remove('form__input-error_active');
@@ -64,4 +64,3 @@ export const clearValidation = (profileForm, validationConfig) => {
     });
 };
 
-enableValidation();

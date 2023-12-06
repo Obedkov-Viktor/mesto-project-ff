@@ -91,9 +91,13 @@ const validationConfig = {
 enableValidation(validationConfig);
 
 const profileForm = document.querySelector('#profileForm');
+const placeForm = document.querySelector('#placeForm');
 // Очистка валидации
 profileForm.addEventListener('open', () => {
     clearValidation(profileForm, validationConfig);
 });
+placeForm.addEventListener('open', () => {
+    clearValidation(profileForm, validationConfig);
+})
 
 formProfile.addEventListener('submit', handleFormProfileSubmit);
