@@ -2,6 +2,7 @@ import './styles/index.css';
 import {initialCards} from "./components/cards";
 import {createCard} from "./components/card";
 import {closeModal, openModal} from "./components/modal";
+import {enableValidation, clearValidation} from "./components/validate";
 
 
 const placesItem = document.querySelector('.places__list');
@@ -68,18 +69,6 @@ initialCards.forEach(function (card) {
 // @todo: нажатия кнопки «Сохранить» информация на странице обновляется, а попап автоматически закрывается
 function handleFormProfileSubmit(evt) {
     evt.preventDefault();
-    const inputs = Array.from(formProfile.querySelectorAll('.popup__input'));
-    let formIsValid = true;
-
-    inputs.forEach(input => {
-        const errorElement = formProfile.querySelector(`.${input.id}-error`);
-        if(!input.validity.valid){
-            showInputError(input, errorElement);
-            formIsValid = false;
-        }else{
-            hideInputError(input, errorElement);
-        }
-    });
 
     const nameValue = nameInput.value;
     const jobValue = jobInput.value;
@@ -88,12 +77,23 @@ function handleFormProfileSubmit(evt) {
     closeModal(popupProfile);
 }
 
-formError.addEventListener('input', function () {
-    if (!formInput.validity.valid) {
-        showInputError(formInput);
-    } else {
-        hideInputError(formInput);
-    }
-})
+//@todo: Валидация
+const validationConfig = {
+    formSelector: '.popup__form',
+    inputSelector: '.popup__input',
+    submitButtonSelector: '.popup__button',
+    inactiveButtonClass: 'popup__button_disabled',
+    inputErrorClass: 'popup__input_type_error',
+    errorClass: 'popup__error_visible'
+};
+
+// Включение валидации
+enableValidation(validationConfig);
+
+const profileForm = document.querySelector('#profileForm');
+// Очистка валидации
+profileForm.addEventListener('open', () => {
+    clearValidation(profileForm, validationConfig);
+});
 
 formProfile.addEventListener('submit', handleFormProfileSubmit);
