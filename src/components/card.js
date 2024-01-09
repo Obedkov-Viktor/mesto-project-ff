@@ -3,7 +3,6 @@ import {putLike, removeLike} from "./api";
 // @todo: Темплейт карточки
 const templateCards = document.querySelector('#card-template').content;
 
-openImagePopup();
 export function getCard(cardData, currentUser, handleDeleteCardClick) {
     const cardElement = templateCards.querySelector('.card').cloneNode(true);
     const likeButton = cardElement.querySelector('.card__like-button');
