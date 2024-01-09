@@ -31,11 +31,11 @@ const isValid = (formElement, inputElement, {nameRegExp, aboutRegExp, placeNameR
     if (!inputElement.value.length) {
         errorMessage = 'Это поля обязательное';
     } else if ((inputElement.name === 'name' && !nameRegExp.test(inputElement.value))) {
-        errorMessage = 'В поле "Имя" должно быть от 2 до 40 символов';
+        errorMessage = 'В поле "Имя" должно быть от 2 до 40 символов и допускать только латинские и кириллические буквы, знаки дефиса и пробелы';
     } else if ((inputElement.name === 'description' && !aboutRegExp.test(inputElement.value))) {
-        errorMessage = 'В поле "О себе" должно быть от 2 до 200 символов'
+        errorMessage = 'В поле "О себе" должно быть от 2 до 200 символов и допускать только латинские и кириллические буквы, знаки дефиса и пробелы'
     } else if ((inputElement.name === 'place-name' && !placeNameRegExp.test(inputElement.value))) {
-        errorMessage = 'В поле "Название" должно быть от 2 до 30 символов';
+        errorMessage = 'В поле "Название" должно быть от 2 до 30 символов и допускать только латинские и кириллические буквы, знаки дефиса и пробелы';
     } else if (((inputElement.name === 'link' && !urlRegExp.test(inputElement.value)))) {
         errorMessage = 'В поле «Ссылка на картинку» должен быть URL';
     } else if (inputElement.validity.tooShort || inputElement.validity.tooLong) {

@@ -9,6 +9,28 @@
   background-position: center;
   margin: 0 29px 0 0;
   /*Макет очень кривоват, как считать этот отступ я хз. Проявите тут лояльность пока что*/
+  position: relative;
+  transition: background-color 0.3s;
+
+}
+.profile__image::before {
+  content: url('/src/images/pen.svg'); /* Добавляем иконку редактирования */
+  position: absolute;
+  top: 50%; /* Позиционирование по вертикали */
+  left: 50%; /* Позиционирование по горизонтали */
+  transform: translate(-50%, -50%); /* Центрируем иконку */
+  opacity: 0; /* Начально прячем иконку */
+  transition: opacity 0.3s; /* Добавляем плавное появление */
+}
+
+.profile__image:hover {
+  /* изменяем цвет фона иконки на черный */
+  background-color: black;
+  cursor: pointer;
+}
+
+.profile__image:hover::before {
+  opacity: 1; /* Показываем иконку при наведении */
 }
 
 @media screen and (max-width: 740px) {
