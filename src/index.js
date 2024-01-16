@@ -23,7 +23,7 @@ const updateAvatarForm = document.querySelector('#updateAvatarForm');
 
 
 const currentUser = {
-    _id: "cff51f679317655b47c725bd"
+    _id: ""
 }
 const validationConfig = {
     formSelector: '.popup__form',
@@ -33,31 +33,42 @@ const validationConfig = {
     inputErrorClass: 'popup__input_type_error',
     errorClass: 'popup__error_visible',
 };
-
 popupProfileOpenButton.addEventListener('click', () => {
+    clearValidation(profileForm, validationConfig);
     nameInput.value = profileName.textContent;
     jobInput.value = profileDescription.textContent;
     openModal(popupProfile);
 });
-popupCardOpenButton.addEventListener('click', () => openModal(popupAddCard));
+popupCardOpenButton.addEventListener('click', () => {
+    clearValidation(placeForm, validationConfig);
+    openModal(popupAddCard);
+});
 profileImage.addEventListener('click', () => openModal(popupAvatar));
 
 
 // Функция для отображения карточек на странице
 function displayInitialCards(currentUser, cardsArray) {
-    if (Array.isArray(cardsArray)){
+    if (Array.isArray(cardsArray)) {
         cardsArray.forEach((carData) => {
             const cardElement = getCard(carData, currentUser, handleDeleteCardClick);
             cardContainer.appendChild(cardElement);
         });
-    }else{
+    } else {
         console.log('Ожидался массив, получен другой тип данных');
     }
 }
 
 // Вызов метода getUserInfo() и getInitialCards() с помощью Promise.all()
-Promise.all([getUserInfo(), getInitialCards()])
+Promise.all([getUserInfo(currentUser._id), getInitialCards()])
     .then(([userData, initialCards]) => {
+        // Установка _id для currentUser
+        currentUser._id = userData._id;
+        // Устанавливаем полученный аватар как задний фон изображения
+        profileImage.style.backgroundImage = `url(${userData.avatar})`;
+        // Устанавливаем имя пользователя в соответствующий элемент на странице
+        profileName.textContent = userData.name;
+        // Устанавливаем описание пользователя в соответствующий элемент на странице
+        profileDescription.textContent = userData.about;
         // Отображение начальных карточек после получения данных пользователя и карточек
         displayInitialCards(userData, initialCards);
     })
@@ -89,20 +100,21 @@ function handleProfileSubmit(evt) {
 }
 
 // @todo: Обработчик события submit для формы создания новой карточки
-async function handleNewCardSubmit(event) {
+function handleNewCardSubmit(event) {
     event.preventDefault();
     const placeName = newCardForm.querySelector('.popup__input_type_card-name').value;
     const link = newCardForm.querySelector('.popup__input_type_url').value;
     // Создаем объект новой карточки
-    try {
-        const newCardData = await addNewCard(placeName, link);
-        const newCard = getCard(newCardData, currentUser); // Подставьте свою функцию для создания карточки
-        cardContainer.appendChild(newCard);
-        closeModal(popupAddCard);
-        newCardForm.reset();
-    } catch (error) {
-        console.error('Ошибка при добавлении карточки:', error);
-    }
+    addNewCard(placeName, link)
+        .then(newCardData => {
+            const newCard = getCard(newCardData, currentUser); // Подставьте свою функцию для создания карточки
+            cardContainer.prepend(newCard); // Используем метод prepend для добавления новой карточки
+            closeModal(popupAddCard);
+            newCardForm.querySelector('.popup__button').setAttribute('disabled', true); // Блокируем кнопку сабмита
+        })
+        .catch(error => {
+            console.error('Ошибка при добавлении карточки:', error);
+        });
 }
 
 // Обработчик события удаления карточки
@@ -130,40 +142,16 @@ function handleUpdateAvatar(event) {
             profileImage.src = result.avatar; // Обновляем отображаемый на странице аватар
             closeModal(popupAvatar); // Закрываем попап для обновления аватара
             updateAvatarForm.reset(); // Очищаем поля формы обновления аватара
+            updateAvatarForm.querySelector('.popup__button').setAttribute('disabled', true);
         })
         .catch((err) => {
             console.log(err);
         });
 }
 
-
-// Получаем информацию о текущем пользователе с сервера
-getUserInfo(currentUser._id)
-    .then((userInfo) => {
-        // Устанавливаем полученный аватар как задний фон изображения
-        profileImage.style.backgroundImage = `url(${userInfo.avatar})`;
-        // Устанавливаем имя пользователя в соответствующий элемент на странице
-        profileName.textContent = userInfo.name;
-        // Устанавливаем описание пользователя в соответствующий элемент на странице
-        profileDescription.textContent = userInfo.about;
-
-    })
-    .catch((err) => {
-        console.log(err);
-    })
-
 // Включение валидации
 enableValidation(validationConfig);
-profileForm.addEventListener('open', () => {
-    clearValidation(profileForm, validationConfig);
-});
-placeForm.addEventListener('open', () => {
-    clearValidation(profileForm, validationConfig);
-})
-updateAvatarForm.addEventListener('open', () => {
-        clearValidation(updateAvatarForm, validationConfig)
-    }
-)
+
 updateAvatarForm.addEventListener('submit', handleUpdateAvatar);
 formProfile.addEventListener('submit', handleProfileSubmit);
 newCardForm.addEventListener('submit', handleNewCardSubmit);

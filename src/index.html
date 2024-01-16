@@ -44,8 +44,12 @@
                         id="name-input"
                         placeholder="Имя"
                         required
+                        pattern="[A-Za-zА-Яа-яЁё\s\-,]+"
+                        minlength="2"
+                        maxlength="40"
+                        data-custom-error="Имя должно содержать от 2 до 40 символов и допускаются только буквы, пробелы и знаки дефиса"
                 >
-                <span class="name-input-error input-error"></span>
+                <span id="name-input-error" class="popup__error_visible popup__input_type_error" for="name-input"></span>
                 <input
                         type="text"
                         name="description"
@@ -53,9 +57,13 @@
                         id="description-input"
                         placeholder="Занятие"
                         required
+                        pattern="[A-Za-zА-Яа-яЁё0-9\s\-,]+"
+                        minlength="2"
+                        maxlength="200"
+                        data-custom-error="Описание должно содержать от 2 до 200 символов и допускаются только буквы, цифры, пробелы и знаки дефиса"
                 >
-                <span class="description-input-error input-error"></span>
-                <button type="submit" class="button popup__button">Сохранить</button>
+                <span id="description-input-error" class="popup__error_visible popup__input_type_error" for="description-input"></span>
+                <button type="submit" class="popup__button popup__button_disabled">Сохранить</button>
             </form>
         </div>
     </div>
@@ -71,6 +79,10 @@
                         id="placeName-input"
                         placeholder="Название"
                         required
+                        pattern="[A-Za-zА-Яа-яЁё\- ]"
+                        minlength="2"
+                        maxlength="30"
+                        title="Название может содержать латинские и кириллические буквы, знаки дефиса и пробелы"
                 >
                 <span class="placeName-input-error input-error"></span>
                 <input
@@ -81,8 +93,8 @@
                         placeholder="Ссылка на картинку"
                         required
                 >
-                <span class="placeLink-input-error input-error"></span>
-                <button type="submit" class="button popup__button">Сохранить</button>
+                <span class="placeLink-input-error popup__error_visible popup__input_type_error" for="placeLink-input"></span>
+                <button type="submit" class="popup__button popup__button_disabled">Сохранить</button>
             </form>
         </div>
     </div>
