@@ -33,14 +33,16 @@ const validationConfig = {
     inputErrorClass: 'popup__input_type_error',
     errorClass: 'popup__error_visible',
 };
-
 popupProfileOpenButton.addEventListener('click', () => {
-    clearValidation(formProfile, validationConfig);
+    clearValidation(profileForm, validationConfig);
     nameInput.value = profileName.textContent;
     jobInput.value = profileDescription.textContent;
     openModal(popupProfile);
 });
-popupCardOpenButton.addEventListener('click', () => openModal(popupAddCard));
+popupCardOpenButton.addEventListener('click', () => {
+    clearValidation(placeForm, validationConfig);
+    openModal(popupAddCard);
+});
 profileImage.addEventListener('click', () => openModal(popupAvatar));
 
 
