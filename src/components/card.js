@@ -56,6 +56,8 @@ export function getCard(cardData, currentUser, handleDeleteCardClick) {
 
         }
     })
+
+
     // Этот код проверяет, является ли текущий пользователь владельцем карточки.
     // Если да, то показывается кнопка "удалить", которая позволяет пользователю удалить карточку.
     // Если текущий пользователь не является владельцем карточки, то кнопка "удалить" скрывается.
@@ -74,7 +76,3 @@ export function getCard(cardData, currentUser, handleDeleteCardClick) {
 
     return cardElement;
 }
-
-
-
-

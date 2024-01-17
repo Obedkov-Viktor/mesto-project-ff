@@ -75,25 +75,25 @@
                 <input
                         type="text"
                         name="place-name"
-                        class="popup__input popup__input_type_card-name"
+                        class="popup__input popup__input_type_name"
                         id="placeName-input"
                         placeholder="Название"
                         required
-                        pattern="[A-Za-zА-Яа-яЁё\- ]"
+                        pattern="[A-Za-zА-Яа-яЁё\s\-]+"
                         minlength="2"
                         maxlength="30"
                         title="Название может содержать латинские и кириллические буквы, знаки дефиса и пробелы"
                 >
-                <span class="placeName-input-error input-error"></span>
+                <span id="placeName-input-error" class="popup__error_visible popup__input_type_error" for="place-name-input">></span>
                 <input
                         type="url"
-                        name="link"
+                        name="placeLink"
                         class="popup__input popup__input_type_url"
                         id="placeLink-input"
                         placeholder="Ссылка на картинку"
                         required
                 >
-                <span class="placeLink-input-error popup__error_visible popup__input_type_error" for="placeLink-input"></span>
+                <span id="placeLink-input-error" class="placeLink-input-error popup__error_visible popup__input_type_error" for="placeLink-input"></span>
                 <button type="submit" class="popup__button popup__button_disabled">Сохранить</button>
             </form>
         </div>

@@ -16,11 +16,10 @@ const jobInput = document.querySelector('.popup__input_type_description');
 const profileImage = document.querySelector('.profile__image');
 const profileName = document.querySelector('.profile__title');
 const profileDescription = document.querySelector('.profile__description');
-const newCardForm = document.querySelector('.popup_type_new-card .popup__form');
+const newCardForm = document.querySelector('.popup_type_new-card');
 const profileForm = document.querySelector('#profileForm');
 const placeForm = document.querySelector('#placeForm');
 const updateAvatarForm = document.querySelector('#updateAvatarForm');
-
 
 const currentUser = {
     _id: ""
@@ -51,7 +50,7 @@ function displayInitialCards(currentUser, cardsArray) {
     if (Array.isArray(cardsArray)) {
         cardsArray.forEach((carData) => {
             const cardElement = getCard(carData, currentUser, handleDeleteCardClick);
-            cardContainer.appendChild(cardElement);
+            cardContainer.prepend(cardElement);
         });
     } else {
         console.log('Ожидался массив, получен другой тип данных');
@@ -102,7 +101,8 @@ function handleProfileSubmit(evt) {
 // @todo: Обработчик события submit для формы создания новой карточки
 function handleNewCardSubmit(event) {
     event.preventDefault();
-    const placeName = newCardForm.querySelector('.popup__input_type_card-name').value;
+    const placeName = newCardForm.querySelector('.popup__input_type_name').value;
+    console.log(placeName)
     const link = newCardForm.querySelector('.popup__input_type_url').value;
     // Создаем объект новой карточки
     addNewCard(placeName, link)
@@ -118,9 +118,10 @@ function handleNewCardSubmit(event) {
 }
 
 // Обработчик события удаления карточки
-function handleDeleteCardClick(cardId, cardElement) {
+function handleDeleteCardClick(cardId) {
     deleteCard(cardId)
         .then(() => {
+            const cardElement = document.getElementById(cardId);
             cardElement.remove()
         })
         .catch((error) => {
