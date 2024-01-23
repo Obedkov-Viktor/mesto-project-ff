@@ -67,7 +67,6 @@ export function editUserProfile(name, about) {
 
 // Добавление новой карточки
 export async function addNewCard(name, link) {
-
     return fetch(targetUrl(cards), {
         method: 'POST',
         headers: {

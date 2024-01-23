@@ -23,14 +23,14 @@ const hideInputError = (formElement, inputElement, {inputErrorClass, errorClass}
 
 const isValid = (formElement, inputElement, {inputErrorClass, errorClass}) => {
     let errorMessage = '';
-    if (!inputElement.validity.valid) {
-        if (inputElement.validity.valueMissing) {
-            errorMessage = 'Это поле обязательное';
-        } else if (inputElement.validity.tooShort || inputElement.validity.tooLong) {
-            errorMessage = `Длина должна быть от ${inputElement.minLength} до ${inputElement.maxLength} символов`;
-        } else if (inputElement.validity.patternMismatch) {
-            errorMessage = inputElement.dataset.customError || inputElement.validationMessage;
-        }
+    if (inputElement.validity.patternMismatch) {
+        errorMessage = inputElement.dataset.customError || inputElement.dataset.customDescriptionError || inputElement.dataset.customPlaceNameError;
+    } else if (inputElement.validity.tooShort) {
+        errorMessage = inputElement.dataset.customError || inputElement.dataset.customDescriptionError || inputElement.dataset.customPlaceNameError;
+    } else if (inputElement.validity.tooLong) {
+        errorMessage = inputElement.dataset.customError || inputElement.dataset.customDescriptionError || inputElement.dataset.customPlaceNameError;
+    } else if (inputElement.validity.typeMismatch) {
+       errorMessage =  inputElement.dataset.customPlaceUrlError || inputElement.dataset.customUpdateAvatarError;
     }
     if (errorMessage) {
         showInputError(formElement, inputElement, errorMessage, {inputErrorClass, errorClass});
@@ -38,6 +38,7 @@ const isValid = (formElement, inputElement, {inputErrorClass, errorClass}) => {
         hideInputError(formElement, inputElement , {inputErrorClass, errorClass});
     }
 }
+
 const setEventListeners = (formElement, validationConfig) => {
     const inputList = Array.from(formElement.querySelectorAll('.popup__input'));
     const buttonElement = formElement.querySelector(validationConfig.submitButtonSelector);

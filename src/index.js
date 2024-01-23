@@ -50,7 +50,7 @@ function displayInitialCards(currentUser, cardsArray) {
     if (Array.isArray(cardsArray)) {
         cardsArray.forEach((carData) => {
             const cardElement = getCard(carData, currentUser, handleDeleteCardClick);
-            cardContainer.prepend(cardElement);
+            cardContainer.append(cardElement);
         });
     } else {
         console.log('Ожидался массив, получен другой тип данных');
@@ -71,10 +71,6 @@ Promise.all([getUserInfo(currentUser._id), getInitialCards()])
         // Отображение начальных карточек после получения данных пользователя и карточек
         displayInitialCards(userData, initialCards);
     })
-    .catch((error) => {
-        console.log('Ошибка при загрузке данных:', error);
-    });
-
 // Редактирование профиля
 // Функция для обработки события отправки формы профиля.
 function handleProfileSubmit(evt) {
@@ -102,12 +98,11 @@ function handleProfileSubmit(evt) {
 function handleNewCardSubmit(event) {
     event.preventDefault();
     const placeName = newCardForm.querySelector('.popup__input_type_name').value;
-    console.log(placeName)
     const link = newCardForm.querySelector('.popup__input_type_url').value;
     // Создаем объект новой карточки
     addNewCard(placeName, link)
         .then(newCardData => {
-            const newCard = getCard(newCardData, currentUser); // Подставьте свою функцию для создания карточки
+            const newCard = getCard(newCardData, currentUser, handleDeleteCardClick); // Подставьте свою функцию для создания карточки
             cardContainer.prepend(newCard); // Используем метод prepend для добавления новой карточки
             closeModal(popupAddCard);
             newCardForm.querySelector('.popup__button').setAttribute('disabled', true); // Блокируем кнопку сабмита
@@ -118,14 +113,10 @@ function handleNewCardSubmit(event) {
 }
 
 // Обработчик события удаления карточки
-function handleDeleteCardClick(cardId) {
+function handleDeleteCardClick(cardId, cardElement) {
     deleteCard(cardId)
         .then(() => {
-            const cardElement = document.getElementById(cardId);
             cardElement.remove()
-        })
-        .catch((error) => {
-            console.error('Ошибка при удалении карточки:', error);
         })
 }
 
@@ -140,14 +131,11 @@ function handleUpdateAvatar(event) {
     // Вызываем функцию для обновления аватара пользователя и передаем в нее новый URL аватара
     updateAvatar(avatarUrl)
         .then((result) => {
-            profileImage.src = result.avatar; // Обновляем отображаемый на странице аватар
+            profileImage.style.backgroundImage = `url('${result.avatar}')`;// Обновляем отображаемый на странице аватар
             closeModal(popupAvatar); // Закрываем попап для обновления аватара
             updateAvatarForm.reset(); // Очищаем поля формы обновления аватара
             updateAvatarForm.querySelector('.popup__button').setAttribute('disabled', true);
         })
-        .catch((err) => {
-            console.log(err);
-        });
 }
 
 // Включение валидации
