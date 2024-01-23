@@ -49,7 +49,7 @@
                         maxlength="40"
                         data-custom-error="Имя должно содержать от 2 до 40 символов и допускаются только буквы, пробелы и знаки дефиса"
                 >
-                <span id="name-input-error" class="popup__error_visible popup__input_type_error" for="name-input"></span>
+                <span id="name-input-error" class="popup__input_type_error" for="name-input"></span>
                 <input
                         type="text"
                         name="description"
@@ -60,9 +60,9 @@
                         pattern="[A-Za-zА-Яа-яЁё0-9\s\-,]+"
                         minlength="2"
                         maxlength="200"
-                        data-custom-error="Описание должно содержать от 2 до 200 символов и допускаются только буквы, цифры, пробелы и знаки дефиса"
+                        data-custom-description-error="Описание должно содержать от 2 до 200 символов и допускаются только буквы, цифры, пробелы и знаки дефиса"
                 >
-                <span id="description-input-error" class="popup__error_visible popup__input_type_error" for="description-input"></span>
+                <span id="description-input-error" class="popup__input_type_error" for="description-input"></span>
                 <button type="submit" class="popup__button popup__button_disabled">Сохранить</button>
             </form>
         </div>
@@ -82,9 +82,9 @@
                         pattern="[A-Za-zА-Яа-яЁё\s\-]+"
                         minlength="2"
                         maxlength="30"
-                        title="Название может содержать латинские и кириллические буквы, знаки дефиса и пробелы"
+                        data-custom-place-name-error ="Название должно быть от 2 до 30 символов и может содержать латинские и кириллические буквы, знаки дефиса и пробелы"
                 >
-                <span id="placeName-input-error" class="popup__error_visible popup__input_type_error" for="place-name-input">></span>
+                <span id="placeName-input-error" class="popup__input_type_error" for="place-name-input">></span>
                 <input
                         type="url"
                         name="placeLink"
@@ -92,8 +92,9 @@
                         id="placeLink-input"
                         placeholder="Ссылка на картинку"
                         required
+                        data-custom-place-url-error="В поле «Ссылка на картинку» должен быть URL"
                 >
-                <span id="placeLink-input-error" class="placeLink-input-error popup__error_visible popup__input_type_error" for="placeLink-input"></span>
+                <span id="placeLink-input-error" class="popup__input_type_error" for="placeLink-input"></span>
                 <button type="submit" class="popup__button popup__button_disabled">Сохранить</button>
             </form>
         </div>
@@ -117,8 +118,9 @@
                         id="avatar-input"
                         placeholder="Ссылка на картинку"
                         required
+                        data-custom-update-avatar-error="В поле «Ссылка на картинку» должен быть URL"
                 >
-                <span class="avatar-input-error input-error"></span>
+                <span id="avatar-input-error" class="popup__input_type_error"></span>
                 <button type="submit" class="button popup__button">Сохранить</button>
             </form>
         </div>

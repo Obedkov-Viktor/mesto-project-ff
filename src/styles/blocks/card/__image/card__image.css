@@ -1,10 +1,11 @@
 .card__image {
-  min-height: 282px;
-  object-fit: cover;
+  display: block;
+  background-color: rgb(134, 132, 132);
   width: 100%;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  height: 282px;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+  object-fit: cover;
 }
 
 .card__image:hover {
