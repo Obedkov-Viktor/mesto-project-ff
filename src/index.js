@@ -33,7 +33,6 @@ const validationConfig = {
     errorClass: 'popup__error_visible',
 };
 popupProfileOpenButton.addEventListener('click', () => {
-    clearValidation(profileForm, validationConfig);
     nameInput.value = profileName.textContent;
     jobInput.value = profileDescription.textContent;
     openModal(popupProfile);
@@ -71,6 +70,9 @@ Promise.all([getUserInfo(currentUser._id), getInitialCards()])
         // Отображение начальных карточек после получения данных пользователя и карточек
         displayInitialCards(userData, initialCards);
     })
+    .catch((err) => {
+        console.log(err);
+    });
 // Редактирование профиля
 // Функция для обработки события отправки формы профиля.
 function handleProfileSubmit(evt) {
@@ -79,6 +81,9 @@ function handleProfileSubmit(evt) {
     // Получаем значение из полей ввода имени и описания пользователя
     const userName = nameInput.value;
     const userDescription = jobInput.value;
+
+    // Изменяем надпись на кнопке
+    profileForm.querySelector('.popup__button').textContent = 'Сохранение...';
 
     // Вызываем функцию для обновления профиля пользователя и передаем в нее новые данные.
     editUserProfile(userName, userDescription)
@@ -92,6 +97,10 @@ function handleProfileSubmit(evt) {
         .catch((err) => {
             console.log(err);
         })
+        .finally(() => {
+            // Восстанавливаем первоначальную надпись на кнопке
+            profileForm.querySelector('.popup__button').textContent = 'Сохранить';
+        });
 }
 
 // @todo: Обработчик события submit для формы создания новой карточки
@@ -99,16 +108,24 @@ function handleNewCardSubmit(event) {
     event.preventDefault();
     const placeName = newCardForm.querySelector('.popup__input_type_name').value;
     const link = newCardForm.querySelector('.popup__input_type_url').value;
+    newCardForm.querySelector('.popup__button').textContent = 'Сохранение...';
     // Создаем объект новой карточки
     addNewCard(placeName, link)
         .then(newCardData => {
             const newCard = getCard(newCardData, currentUser, handleDeleteCardClick); // Подставьте свою функцию для создания карточки
             cardContainer.prepend(newCard); // Используем метод prepend для добавления новой карточки
             closeModal(popupAddCard);
-            newCardForm.querySelector('.popup__button').setAttribute('disabled', true); // Блокируем кнопку сабмита
+
+
+            newCardForm.querySelector('.popup__button').setAttribute('disabled', true);
+
         })
         .catch(error => {
             console.error('Ошибка при добавлении карточки:', error);
+        })
+        .finally(() => {
+            // Восстанавливаем первоначальную надпись на кнопке
+            newCardForm.querySelector('.popup__button').textContent = 'Сохранить';
         });
 }
 
@@ -118,13 +135,21 @@ function handleDeleteCardClick(cardId, cardElement) {
         .then(() => {
             cardElement.remove()
         })
+        .catch(error => {
+            console.error('Ошибка при удаление карточки:', error);
+        })
 }
 
 //@todo: Функция для обновления аватара пользователя
 function handleUpdateAvatar(event) {
     event.preventDefault();// Предотвращает перезагрузку страницы при отправке формы
 
+    const submitButton = updateAvatarForm.querySelector('.popup__button'); // Предполагаем, что это кнопка сабмита
+    const originalButtonText = submitButton.textContent; // Сохраняем оригинальный текст кнопки
+    submitButton.textContent = 'Сохранение...'; // Меняем надпись на кнопке на "Сохранение..."
+
     // Получаем доступ к полю ввода URL аватара
+
     const avatarUrlInput = updateAvatarForm.querySelector('.popup__input_type_url');
     const avatarUrl = avatarUrlInput.value; // Получаем значение URL аватара
 
@@ -134,8 +159,14 @@ function handleUpdateAvatar(event) {
             profileImage.style.backgroundImage = `url('${result.avatar}')`;// Обновляем отображаемый на странице аватар
             closeModal(popupAvatar); // Закрываем попап для обновления аватара
             updateAvatarForm.reset(); // Очищаем поля формы обновления аватара
-            updateAvatarForm.querySelector('.popup__button').setAttribute('disabled', true);
+            updateAvatarForm.querySelector('.popup__button').disabled = true;
         })
+        .catch(error => {
+            console.error('Ошибка при обновление картинки:', error);
+        })
+        .finally(() => {
+            submitButton.textContent = originalButtonText; // Возвращаем исходный текст кнопки
+        });
 }
 
 // Включение валидации

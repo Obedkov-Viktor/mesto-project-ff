@@ -47,7 +47,10 @@
                         pattern="[A-Za-zА-Яа-яЁё\s\-,]+"
                         minlength="2"
                         maxlength="40"
-                        data-custom-error="Имя должно содержать от 2 до 40 символов и допускаются только буквы, пробелы и знаки дефиса"
+                        data-required-error="Поле имени должно быть заполнено"
+                        data-pattern-error="Имя должно содержать только буквы, пробелы и знаки дефиса"
+                        data-length-error="Имя должно содержать от 2 до 40 символов"
+                        data-type-error="Пожалуйста, введите корректное имя"
                 >
                 <span id="name-input-error" class="popup__input_type_error" for="name-input"></span>
                 <input
@@ -60,7 +63,10 @@
                         pattern="[A-Za-zА-Яа-яЁё0-9\s\-,]+"
                         minlength="2"
                         maxlength="200"
-                        data-custom-description-error="Описание должно содержать от 2 до 200 символов и допускаются только буквы, цифры, пробелы и знаки дефиса"
+                        data-required-error="Поле описания должно быть заполнено"
+                        data-pattern-error="Описание должно содержать только буквы, цифры, пробелы и знаки дефиса"
+                        data-length-error="Описание должно содержать от 2 до 200 символов"
+                        data-type-error="Пожалуйста, введите корректное описание"
                 >
                 <span id="description-input-error" class="popup__input_type_error" for="description-input"></span>
                 <button type="submit" class="popup__button popup__button_disabled">Сохранить</button>
@@ -82,7 +88,10 @@
                         pattern="[A-Za-zА-Яа-яЁё\s\-]+"
                         minlength="2"
                         maxlength="30"
-                        data-custom-place-name-error ="Название должно быть от 2 до 30 символов и может содержать латинские и кириллические буквы, знаки дефиса и пробелы"
+                        data-required-error="Поле названия должно быть заполнено"
+                        data-pattern-error="Название должно содержать только латинские и кириллические буквы, знаки дефиса и пробелы"
+                        data-length-error="Название должно содержать от 2 до 30 символов"
+
                 >
                 <span id="placeName-input-error" class="popup__input_type_error" for="place-name-input">></span>
                 <input
@@ -92,7 +101,8 @@
                         id="placeLink-input"
                         placeholder="Ссылка на картинку"
                         required
-                        data-custom-place-url-error="В поле «Ссылка на картинку» должен быть URL"
+                        data-required-error="Поле «Ссылка на картинку» должно быть заполнено"
+                        data-type-error="В поле «Ссылка на картинку» должен быть введен корректный URL"
                 >
                 <span id="placeLink-input-error" class="popup__input_type_error" for="placeLink-input"></span>
                 <button type="submit" class="popup__button popup__button_disabled">Сохранить</button>
@@ -118,7 +128,8 @@
                         id="avatar-input"
                         placeholder="Ссылка на картинку"
                         required
-                        data-custom-update-avatar-error="В поле «Ссылка на картинку» должен быть URL"
+                        data-required-error="Поле «Ссылка на картинку» должно быть заполнено"
+                        data-type-error="В поле «Ссылка на картинку» должен быть введен корректный URL"
                 >
                 <span id="avatar-input-error" class="popup__input_type_error"></span>
                 <button type="submit" class="button popup__button">Сохранить</button>
