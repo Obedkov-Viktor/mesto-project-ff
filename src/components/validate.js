@@ -24,13 +24,15 @@ const hideInputError = (formElement, inputElement, {inputErrorClass, errorClass}
 const isValid = (formElement, inputElement, {inputErrorClass, errorClass}) => {
     let errorMessage = '';
     if (inputElement.validity.patternMismatch) {
-        errorMessage = inputElement.dataset.customError || inputElement.dataset.customDescriptionError || inputElement.dataset.customPlaceNameError;
+        errorMessage = inputElement.dataset.patternError;
     } else if (inputElement.validity.tooShort) {
-        errorMessage = inputElement.dataset.customError || inputElement.dataset.customDescriptionError || inputElement.dataset.customPlaceNameError;
+        errorMessage = inputElement.dataset.lengthError;
     } else if (inputElement.validity.tooLong) {
-        errorMessage = inputElement.dataset.customError || inputElement.dataset.customDescriptionError || inputElement.dataset.customPlaceNameError;
+        errorMessage = inputElement.dataset.lengthError;
     } else if (inputElement.validity.typeMismatch) {
-       errorMessage =  inputElement.dataset.customPlaceUrlError || inputElement.dataset.customUpdateAvatarError;
+        errorMessage = inputElement.dataset.typeError;
+    } else if (inputElement.validity.valueMissing && inputElement.required) {
+        errorMessage = inputElement.dataset.requiredError;
     }
     if (errorMessage) {
         showInputError(formElement, inputElement, errorMessage, {inputErrorClass, errorClass});
