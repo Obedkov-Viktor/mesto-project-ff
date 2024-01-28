@@ -38,7 +38,6 @@ popupProfileOpenButton.addEventListener('click', () => {
     openModal(popupProfile);
 });
 popupCardOpenButton.addEventListener('click', () => {
-    clearValidation(placeForm, validationConfig);
     openModal(popupAddCard);
 });
 profileImage.addEventListener('click', () => openModal(popupAvatar));
@@ -106,9 +105,16 @@ function handleProfileSubmit(evt) {
 // @todo: Обработчик события submit для формы создания новой карточки
 function handleNewCardSubmit(event) {
     event.preventDefault();
-    const placeName = newCardForm.querySelector('.popup__input_type_name').value;
-    const link = newCardForm.querySelector('.popup__input_type_url').value;
-    newCardForm.querySelector('.popup__button').textContent = 'Сохранение...';
+
+    const placeNameInput = newCardForm.querySelector('.popup__input_type_name');
+    const linkInput = newCardForm.querySelector('.popup__input_type_url');
+    const submitButton = newCardForm.querySelector('.popup__button');
+
+
+    const placeName = placeNameInput.value;
+    const link = linkInput.value;
+    submitButton.textContent = 'Сохранение...';
+
     // Создаем объект новой карточки
     addNewCard(placeName, link)
         .then(newCardData => {
@@ -116,8 +122,9 @@ function handleNewCardSubmit(event) {
             cardContainer.prepend(newCard); // Используем метод prepend для добавления новой карточки
             closeModal(popupAddCard);
 
-
-            newCardForm.querySelector('.popup__button').setAttribute('disabled', true);
+            placeNameInput.value = '';
+            linkInput.value = '';
+            submitButton.setAttribute('disabled', true);
 
         })
         .catch(error => {
